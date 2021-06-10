@@ -35,7 +35,7 @@ In this section, we are going to install all the basic packages and tools needed
 
 .. warning:: To follow this guide, a basic knowledge about Ubuntu Server configuration and working with a shell is required.
 
-.. note:: This guide uses ``vim`` as the editor; fill free to use ``nano``, ``gedit`` or others.
+.. note:: This guide uses ``nano`` as the editor; fill free to use ``vim``, ``gedit`` or others.
 
 Upgrade system packages
 .......................
@@ -51,9 +51,9 @@ Check that your system is already up-to-date with the repository running the fol
 Packages Installation
 .....................
 
-.. note:: You don't need to install the **system packages** if you want to run the project using Docker
+.. note:: You need to install the **system packages** if you want to run the project without using Docker
 
-We will use **example.org** as fictitious Domain Name.
+We will use **example.org** as fictitious Domain Name and We going to suppose that you have a clean install. 
 
 First, we are going to install all the **system packages** needed for the GeoNode setup. Login to the target machine and execute the following commands:
 
@@ -66,12 +66,10 @@ First, we are going to install all the **system packages** needed for the GeoNod
       libxslt1-dev libjpeg-dev libpng-dev libpq-dev libgdal-dev \
       software-properties-common build-essential \
       git unzip gcc zlib1g-dev libgeos-dev libproj-dev \
-      sqlite3 spatialite-bin libsqlite3-mod-spatialite libsqlite3-dev
-
+      
   # Install Openjdk
   sudo apt install openjdk-8-jdk-headless default-jdk-headless -y
-  sudo update-java-alternatives --jre-headless --jre --set java-1.8.0-openjdk-amd64
-
+  
   # Verify GDAL version
   gdalinfo --version
     $> GDAL 3.0.4, released 2020/01/28
@@ -89,9 +87,6 @@ First, we are going to install all the **system packages** needed for the GeoNod
     $> OpenJDK Runtime Environment (build 1.8.0_265-8u265-b01-0ubuntu2~20.04-b01)
     $> OpenJDK 64-Bit Server VM (build 25.265-b01, mixed mode)
 
-  # Install VIM
-  sudo apt install -y vim
-
   # Cleanup the packages
   sudo apt update -y; sudo apt upgrade -y; sudo apt autoremove --purge
 
@@ -103,9 +98,6 @@ First, we are going to install all the **system packages** needed for the GeoNod
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 This is the most basic installation of GeoNode. It won't use any external server like ``Apache Tomcat``, ``PostgreSQL`` or ``HTTPD``.
-
-It will run locally against a file-system based ``Spatialite`` database.
-
 
 First of all we need to prepare a new Python Virtual Environment
 
@@ -321,7 +313,7 @@ We will also perform several optimizations to:
 
 **Install Apache Tomcat 9 (ref. https://yallalabs.com/linux/ubuntu/how-to-install-apache-tomcat-9-ubuntu-20-04/)**
 
-.. warning:: Apache Tomcat 9 requires Java 8 or newer to be installed on the server.
+.. warning:: Apache Tomcat 9 requires Java 8.
   Check the steps before in order to be sure you have OpenJDK 8 correctly installed on your system.
 
 First, it is not recommended to run Apache Tomcat as user root, so we will create a new system user which will run the Apache Tomcat server
@@ -335,7 +327,7 @@ Now, go to the official Apache Tomcat `website <https://tomcat.apache.org/>`_ an
 
 .. code-block:: shell
 
-  VERSION=9.0.45; wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
+  VERSION=9.0.46; wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
 
 
 Once the download is complete, extract the tar file to the /opt/tomcat directory:
